@@ -105,6 +105,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const CONFIDENCE_THRESHOLD = 0.5;
 
 
+    async function fetchPositionFromServer() {
+    try {
+        const response = await fetch("http://localhost:5000/get_position");
+        const data = await response.json();
+
+        // Update dashboard using server data
+        dashboardLocationStatus.textContent = data.location;
+        dashboardLocationDetail.textContent = data.detail;
+        locationPageStatus.textContent = data.location;
+        locationPageDetail.textContent = "Current Status: " + data.detail;
+
+        console.log("Fetched position from server:", data);
+    } catch (error) {
+        console.error("Error fetching position:", error);
+    }
+}
     // --- NAVIGATION ---
     function showPage(pageId) {
         // --- MODIFIED: Stop webcam if we are leaving the video page ---
@@ -600,5 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Call this function again on the next animation frame
         state.detectionLoopId = requestAnimationFrame(runDetectionLoop);
     } 
+
 
 });

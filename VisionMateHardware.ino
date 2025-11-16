@@ -6,7 +6,7 @@
 // ==================== CHANGE THESE! ====================
 const char* ssid = "YOUR_WIFI_NAME";           // Your WiFi name
 const char* password = "YOUR_WIFI_PASSWORD";   // Your WiFi password
-const char* serverUrl = "http://192.168.1.XXX:5000/api/position";  // Your laptop IP
+const char* serverUrl = "http://192.168.1.150:5000/api/position";  // Your laptop IP
 // =======================================================
 
 // Motor driver pins

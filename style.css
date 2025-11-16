@@ -1,0 +1,137 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+}
+::-webkit-scrollbar-thumb {
+    background: #4b5563; /* gray-600 */
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #6b7280; /* gray-500 */
+}
+
+/* Page transition styles (simple fade) */
+.page-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sidebar navigation link styles */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #9ca3af; /* gray-400 */
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+.nav-link:hover {
+    background-color: #374151; /* gray-700 */
+    color: #ffffff; /* white */
+}
+.nav-link.active {
+    background-color: #111827; /* gray-900 */
+    color: #ffffff; /* white */
+}
+.nav-link svg {
+    color: #6b7280; /* gray-500 */
+    transition: color 0.15s ease-in-out;
+}
+.nav-link:hover svg,
+.nav-link.active svg {
+    color: #9ca3af; /* gray-400 */
+}
+.nav-link.active svg {
+    color: #22d3ee; /* cyan-400 */
+}
+
+/* Mobile navigation link styles */
+.mobile-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    color: #9ca3af; /* gray-400 */
+    transition: color 0.15s ease-in-out;
+}
+.mobile-nav-link.active {
+    color: #22d3ee; /* cyan-400 */
+}
+.mobile-nav-link:hover {
+    color: #ffffff; /* white */
+}
+
+/* Custom toggle button */
+.toggle-btn {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem; /* w-14 */
+    height: 2rem; /* h-8 */
+    background-color: #4b5563; /* gray-600 */
+    border-radius: 9999px; /* rounded-full */
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+.toggle-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.toggle-btn.active {
+    background-color: #06b6d4; /* cyan-500 */
+}
+.toggle-handle {
+    position: absolute;
+    top: 0.25rem; /* top-1 */
+    left: 0.25rem; /* left-1 */
+    width: 1.5rem; /* w-6 */
+    height: 1.5rem; /* h-6 */
+    background-color: white;
+    border-radius: 9999px; /* rounded-full */
+    transition: transform 0.2s ease-in-out;
+}
+.toggle-btn.active .toggle-handle {
+    transform: translateX(1.5rem); /* translates handle */
+}
+
+/* Pulsing dot animation */
+@keyframes ping-slow {
+    75%, 100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+.animate-ping-slow {
+    animation: ping-slow 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Styling for the badge on the video feed */
+#video-status-badge svg {
+    animation: pulse-svg 2s infinite;
+}
+
+@keyframes pulse-svg {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}

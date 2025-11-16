@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraCode - Personal Safety Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'gray-800': '#1f2937',
+                        'gray-900': '#111827',
+                        'gray-700': '#374151',
+                        'gray-600': '#4b5563',
+                        'gray-500': '#6b7280',
+                        'gray-400': '#9ca3af',
+                        'blue-500': '#3b82f6',
+                        'blue-600': '#2563eb',
+                        'indigo-500': '#6366f1',
+                        'indigo-600': '#4f46e5',
+                        'red-500': '#ef4444',
+                        'red-600': '#dc2626',
+                        'green-500': '#22c55e',
+                        'yellow-500': '#eab308',
+                        'cyan-400': '#22d3ee',
+                        'cyan-500': '#06b6d4',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="h-full font-sans antialiased text-gray-400">
+    <div class="flex h-screen overflow-hidden bg-gray-900">
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64">
+                <div class="flex items-center flex-shrink-0 h-16 px-4 bg-gray-900">
+                    <svg class="w-8 h-8 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6A11.99 11.99 0 0112 2.036zM12 15.75A7.5 7.5 0 015.066 11.982A7.5 7.5 0 0112 15.75zm0 0v3.75m0-3.75a7.5 7.5 0 016.934 3.768A7.5 7.5 0 0112 15.75z" />
+                    </svg>
+                    <span class="ml-2 text-xl font-semibold text-white">AuraCode</span>
+                </div>
+                <div class="flex flex-col flex-1 h-0 overflow-y-auto bg-gray-800">
+                    <nav class="flex-1 px-2 py-4 space-y-1">
+                        <a href="#dashboard" class="nav-link group active" data-page="dashboard">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.09 2.214c.12-.132.28-.214.46-.214h2.9c.18 0 .34.082.46.214l8.28 9.018a.75.75 0 01.11 1.05l-1.04 1.04a.75.75 0 01-1.05-.11L18 11.45V19.5a.75.75 0 01-.75.75h-3.75a.75.75 0 01-.75-.75V15a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75v4.5a.75.75 0 01-.75.75H4.5a.75.75 0 01-.75-.75V11.45l-1.72 1.72a.75.75 0 01-1.05.11l-1.04-1.04a.75.75 0 01.11-1.05l8.28-9.018z" clip-rule="evenodd" />
+                            </svg>
+                            Dashboard
+                        </a>
+                        <a href="#video" class="nav-link group" data-page="video">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                            Live Video
+                        </a>
+                        <a href="#alarms" class="nav-link group" data-page="alarms">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v2.25a3 3 0 003 3h10.5a3 3 0 003-3V12.75a3 3 0 00-3-3v-3A5.25 5.25 0 0012 1.5zM12 21a2.25 2.25 0 002.25-2.25H9.75A2.25 2.25 0 0012 21z" clip-rule="evenodd" />
+                            </svg>
+                            Alarms
+                        </a>
+                        <a href="#health" class="nav-link group" data-page="health">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.218l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" clip-rule="evenodd" />
+                            </svg>
+                            Health
+                        </a>
+                        <a href="#location" class="nav-link group" data-page="location">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 21a9 9 0 01-9-9c0-4.625 3.5-8.44 8.002-8.946A.75.75 0 0112 3.75v16.5a.75.75 0 01-.75.75 9 9 0 01-8.25-7.5h16.5a9 9 0 01-8.25 7.5.75.75 0 01-.75-.75v-16.5A.75.75 0 0112.998 3.054C17.5 3.56 21 7.375 21 12a9 9 0 01-9 9z" />
+                            </svg>
+                            Location
+                        </a>
+                        <a href="#settings" class="nav-link group" data-page="settings">
+                            <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.5H3.75a.75.75 0 000 1.5h6.228c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h6.228a.75.75 0 000-1.5H13.678c-.151-.837-.934-1.5-1.85-1.5zM3.75 12a.75.75 0 000 1.5h2.328c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h10.328a.75.75 0 000-1.5H9.778c-.151-.837-.934-1.5-1.85-1.5s-1.699.663-1.85 1.5H3.75zM10.178 19.5c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h6.228a.75.75 0 000-1.5H13.878c-.151-.837-.934-1.5-1.85-1.5s-1.699.663-1.85 1.5H3.75a.75.75 0 000 1.5h6.428z" clip-rule="evenodd" />
+                            </svg>
+                            Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-1 w-0 overflow-hidden">
+            <div class="relative z-10 flex flex-shrink-0 h-16 bg-gray-800 border-b border-gray-700 shadow-sm">
+                <div class="flex items-center justify-between flex-1 px-4 sm:px-6 md:px-8">
+                    <div class="flex items-center">
+                        <h1 id="page-title" class="text-xl font-semibold text-white">Dashboard</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button id="speak-button" class="p-2 text-gray-400 bg-gray-700 rounded-full hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-cyan-500">
+                            <span class="sr-only">Speak to user</span>
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 18.75a3 3 0 003-3v-7.5a3 3 0 00-6 0v7.5a3 3 0 003 3z" />
+                                <path d="M5.25 12a.75.75 0 00-1.5 0v.01A6.75 6.75 0 0012 18.76v2.99a.75.75 0 001.5 0v-2.99a6.75 6.75 0 008.25-6.75V12a.75.75 0 00-1.5 0v.01a5.25 5.25 0 01-10.5 0V12z" />
+                            </svg>
+                        </button>
+
+                        <button id="sos-button" class="relative p-2 text-white bg-red-600 rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-red-500">
+                            <span class="sr-only">SOS Alert</span>
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <main class="flex-1 overflow-y-auto focus:outline-none">
+                <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 md:px-8">
+                    <div id="dashboard-page" class="page-content">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                            <div class="flex items-start p-5 bg-gray-800 rounded-xl shadow-lg">
+                                <div class="flex-shrink-0 p-3 bg-gray-700 rounded-full">
+                                    <svg class="w-6 h-6 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM12 18.75a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM5.036 6.31a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM16.714 18.97a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM18.97 6.31a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM5.036 16.714a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM9.5 12a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM7.096 7.096a.75.75 0 011.06 0l1.061 1.061a.75.75 0 01-1.06 1.06l-1.061-1.06a.75.75 0 010-1.061zM15.843 15.843a.75.75 0 011.06 0l1.061 1.061a.75.75 0 01-1.06 1.06l-1.061-1.06a.75.75 0 010-1.061z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Air Quality</p>
+                                    <p id="dashboard-aqi" class="text-xl font-bold text-white">32 AQI</p>
+                                    <p class="text-sm text-green-500">Good</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-5 bg-gray-800 rounded-xl shadow-lg">
+                                <div class="flex-shrink-0 p-3 bg-gray-700 rounded-full">
+                                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Live Location</p>
+                                    <p id="dashboard-location-status" class="text-xl font-bold text-white">At Home</p>
+                                    <p id="dashboard-location-detail" class="text-sm text-gray-500">Living Room</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-5 bg-gray-800 rounded-xl shadow-lg">
+                                <div class="flex-shrink-0 p-3 bg-gray-700 rounded-full">
+                                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 8v8h11v-8H4z"></path></svg>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Video Status</p>
+                                    <p id="dashboard-video-status" class="text-xl font-bold text-white">LIVE</p>
+                                    <p class="text-sm text-gray-500">1 Cam (Vest)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-5 bg-gray-800 rounded-xl shadow-lg">
+                                <div class="flex-shrink-0 p-3 bg-gray-700 rounded-full">
+                                    <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                </div>
+                                <div class="flex-1 ml-4">
+                                    <p class="text-sm font-medium text-gray-400">Alarms</p>
+                                    <p class="text-xl font-bold text-white">All Clear</p>
+                                    <p class="text-sm text-green-500">No active alerts</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-6 mt-8 lg:grid-cols-3">
+                            <div class="space-y-6 lg:col-span-2">
+                                <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                                    <h3 class="text-lg font-medium text-white">Live Location</h3>
+                                    <div class="mt-4 h-64 bg-gray-700 rounded-lg relative overflow-hidden">
+                                        <img src="https://placehold.co/800x400/374151/4b5563?text=Map+Interface" alt="Map Placeholder" class="object-cover w-full h-full">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="relative">
+                                                <div class="absolute w-4 h-4 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2"></div>
+                                                <div class="absolute w-4 h-4 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2 animate-ping-slow"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                                    <h3 class="text-lg font-medium text-white">Vitals Summary</h3>
+                                    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                                        <div class="p-4 bg-gray-700 rounded-lg">
+                                            <div class="flex items-center">
+                                                <svg class="w-6 h-6 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM12 18.75a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM5.036 6.31a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM16.714 18.97a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM18.97 6.31a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM5.036 16.714a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM9.5 12a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM7.096 7.096a.75.75 0 011.06 0l1.061 1.061a.75.75 0 01-1.06 1.06l-1.061-1.06a.75.75 0 010-1.061zM15.843 15.843a.75.75 0 011.06 0l1.061 1.061a.75.75 0 01-1.06 1.06l-1.061-1.06a.75.75 0 010-1.061z" />
+                                                </svg>
+                                                <span class="ml-2 text-sm font-medium text-gray-400">Air Quality</span>
+                                            </div>
+                                            <p id="dashboard-aqi-large" class="mt-2 text-3xl font-bold text-white">32 <span class="text-base font-normal">AQI</span></p>
+                                        </div>
+                                        <div class="p-4 bg-gray-700 rounded-lg">
+                                            <div class="flex items-center">
+                                                <svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span class="ml-2 text-sm font-medium text-gray-400">Apple Watch</span>
+                                            </div>
+                                            <p class="mt-2 text-3xl font-bold text-red-500">Not Connected</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                                <h3 class="text-lg font-medium text-white">Recent Activity</h3>
+                                <ul id="activity-log" class="mt-4 space-y-4 overflow-y-auto h-96">
+                                    <li class="flex items-start">
+                                        <div class="flex-shrink-0 p-2 bg-gray-700 rounded-full">
+                                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-white">System Initialized</p>
+                                            <p class="text-sm text-gray-500">1 minute ago</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="video-page" class="hidden page-content">
+                        <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                            <div class="relative aspect-video bg-black rounded-xl overflow-hidden">
+                                <img id="video-placeholder" src="https://placehold.co/1600x900/000000/374151?text=Vest+Camera+Feed" alt="Vest Camera Feed" class="object-cover w-full h-full">
+                                
+                                <div class="absolute top-4 left-4 z-20">
+                                    <span id="video-status-badge" class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-600 text-white">
+                                        <svg class="w-2 h-2 mr-1.5 fill-current" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="4" />
+                                        </svg>
+                                        LIVE
+                                    </span>
+                                </div>
+                    
+                                <div class="absolute inset-0 flex items-center justify-center z-10">
+                                    <span id="video-status-text" class="text-2xl font-semibold text-gray-500"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="alarms-page" class="hidden page-content">
+                        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg lg:col-span-1">
+                                <h3 class="text-lg font-medium text-white">Alarm Settings</h3>
+                                <div class="mt-4 space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                                        <div>
+                                            <p class="font-medium text-white">Smoke & Gas Alarm</p>
+                                            <p class="text-sm text-gray-400">From built-in detector</p>
+                                        </div>
+                                        <button class="toggle-btn active" data-alarm="smoke">
+                                            <span class="toggle-handle"></span>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg relative overflow-hidden">
+                                        <div id="fall-detection-overlay" class="absolute inset-0 z-10 flex items-center justify-center bg-gray-700 bg-opacity-75 backdrop-blur-sm">
+                                            <span class="text-sm font-medium text-white">Requires Apple Watch</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-white">Fall Detection</p>
+                                            <p class="text-sm text-gray-400">From Apple Watch</p>
+                                        </div>
+                                        <button class="toggle-btn" data-alarm="fall" disabled>
+                                            <span class="toggle-handle"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg lg:col-span-2">
+                                <h3 class="text-lg font-medium text-white">Alarm Log</h3>
+                                <ul id="alarm-log" class="mt-4 space-y-4 overflow-y-auto max-h-96">
+                                    <li class="flex items-center p-3 bg-gray-700 rounded-lg">
+                                        <div class="flex-shrink-0 p-2 bg-green-500 rounded-full">
+                                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-white">System Armed</p>
+                                            <p class="text-sm text-gray-400">All alarms online.</p>
+                                        </div>
+                                        <span class="ml-auto text-sm text-gray-500">10:00 AM</span>
+                                    </li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="health-page" class="hidden page-content">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm font-medium text-gray-400">Air Quality</p>
+                                    <span class="text-sm text-green-500">Good</span>
+                                </div>
+                                <p id="health-aqi" class="mt-2 text-4xl font-bold text-white">32 <span class="text-2xl font-normal text-gray-400">AQI</span></p>
+                                <p class="mt-1 text-sm text-gray-500">Smoke & Gas Detector</p>
+                            </div>
+                            
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg relative">
+                                <div class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl">
+                                    <span class="text-white font-medium">Connect Apple Watch</span>
+                                </div>
+                                <div class="flex items-center justify-between opacity-20">
+                                    <p class="text-sm font-medium text-gray-400">Heart Rate</p>
+                                    <span class="text-sm text-gray-500">N/A</span>
+                                </div>
+                                <p class="mt-2 text-4xl font-bold text-white opacity-20">-- <span class="text-2xl font-normal text-gray-400">BPM</span></p>
+                                <p class="mt-1 text-sm text-gray-500 opacity-20">Apple Watch</p>
+                            </div>
+
+                            <div class="p-6 bg-gray-800 rounded-xl shadow-lg relative">
+                                <div class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl">
+                                    <span class="text-white font-medium">Connect Apple Watch</span>
+                                </div>
+                                <div class="flex items-center justify-between opacity-20">
+                                    <p class="text-sm font-medium text-gray-400">Steps</p>
+                                    <span class="text-sm text-gray-500">N/A</span>
+                                </div>
+                                <p class="mt-2 text-4xl font-bold text-white opacity-20">--</p>
+                                <p class="mt-1 text-sm text-gray-500 opacity-20">Apple Watch</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 mt-8 bg-gray-800 rounded-xl shadow-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 p-3 bg-gray-700 rounded-full">
+                                    <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-medium text-white">Connect an Apple Watch</h3>
+                                    <p class="text-sm text-gray-400">To unlock Fall Detection, Heart Rate, and Step data, please connect an Apple Watch via the user's mobile app.</p>
+                                </div>
+                                <button class="ml-auto px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 mt-8 bg-gray-800 rounded-xl shadow-lg">
+                            <h3 class="text-lg font-medium text-white">Medication Schedule</h3>
+                            <ul class="mt-4 space-y-3">
+                                <li class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="ml-3 text-white">Lisinopril</span>
+                                        <span class="ml-2 text-sm text-gray-400">(10mg)</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-300">8:00 AM - Daily</span>
+                                </li>
+                                <li class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="ml-3 text-white">Metformin</span>
+                                        <span class="ml-2 text-sm text-gray-400">(500mg)</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-300">8:00 PM - Daily</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="location-page" class="hidden page-content">
+                        <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-medium text-white">Live Location</h3>
+                                <span id="location-page-status" class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-full">At Home</span>
+                            </div>
+                            <div class="mt-4 h-96 bg-gray-700 rounded-lg relative overflow-hidden">
+                                <img src="https://placehold.co/800x600/374151/4b5563?text=Map+Interface" alt="Map Placeholder" class="object-cover w-full h-full">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="relative">
+                                        <div class="absolute w-5 h-5 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2 border-2 border-white"></div>
+                                        <div class="absolute w-5 h-5 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2 animate-ping-slow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-gray-400">Last updated: <span id="location-last-updated">Just now</span></p>
+                                <p id="location-page-detail" class="text-lg text-white">Current Status: In Living Room</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings-page" class="hidden page-content">
+                        <div class="p-6 bg-gray-800 rounded-xl shadow-lg">
+                            <h3 class="text-lg font-medium text-white">Settings</h3>
+                            <div class="mt-6 border-t border-gray-700">
+                                <div class="divide-y divide-gray-700">
+                                    <div class="py-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-base font-medium text-white">Manage Safe Zones</h4>
+                                                <p class="text-sm text-gray-400">Set preset locations like "Home" or "Office" for location alerts.</p>
+                                            </div>
+                                            <button id="manage-zones-button" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                                Manage
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-base font-medium text-white">Notification Preferences</h4>
+                                                <p class="text-sm text-gray-400">Choose how and when you receive alerts.</p>
+                                            </div>
+                                            <button class="px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-500">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-base font-medium text-white">Account Details</h4>
+                                                <p class="text-sm text-gray-400">Manage your subscription and billing.</p>
+                                            </div>
+                                            <button class="px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-500">
+                                                View
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <nav class="fixed bottom-0 left-0 right-0 z-20 flex items-center justify-around h-16 bg-gray-800 border-t border-gray-700 md:hidden">
+            <a href="#dashboard" class="mobile-nav-link group active" data-page="dashboard">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.09 2.214c.12-.132.28-.214.46-.214h2.9c.18 0 .34.082.46.214l8.28 9.018a.75.75 0 01.11 1.05l-1.04 1.04a.75.75 0 01-1.05-.11L18 11.45V19.5a.75.75 0 01-.75.75h-3.75a.75.75 0 01-.75-.75V15a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75v4.5a.75.75 0 01-.75.75H4.5a.75.75 0 01-.75-.75V11.45l-1.72 1.72a.75.75 0 01-1.05.11l-1.04-1.04a.75.75 0 01.11-1.05l8.28-9.018z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs">Home</span>
+            </a>
+            <a href="#video" class="mobile-nav-link group" data-page="video">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <span class="text-xs">Video</span>
+            </a>
+            <a href="#alarms" class="mobile-nav-link group" data-page="alarms">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v2.25a3 3 0 003 3h10.5a3 3 0 003-3V12.75a3 3 0 00-3-3v-3A5.25 5.25 0 0012 1.5zM12 21a2.25 2.25 0 002.25-2.25H9.75A2.25 2.25 0 0012 21z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs">Alarms</span>
+            </a>
+            <a href="#health" class="mobile-nav-link group" data-page="health">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.218l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs">Health</span>
+            </a>
+            <a href="#location" class="mobile-nav-link group" data-page="location">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21a9 9 0 01-9-9c0-4.625 3.5-8.44 8.002-8.946A.75.75 0 0112 3.75v16.5a.75.75 0 01-.75.75 9 9 0 01-8.25-7.5h16.5a9 9 0 01-8.25 7.5.75.75 0 01-.75-.75v-16.5A.75.75 0 0112.998 3.054C17.5 3.56 21 7.375 21 12a9 9 0 01-9 9z" />
+                </svg>
+                <span class="text-xs">Location</span>
+            </a>
+            <a href="#settings" class="mobile-nav-link group" data-page="settings">
+                <svg class="w-6 h-6 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.5H3.75a.75.75 0 000 1.5h6.228c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h6.228a.75.75 0 000-1.5H13.678c-.151-.837-.934-1.5-1.85-1.5zM3.75 12a.75.75 0 000 1.5h2.328c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h10.328a.75.75 0 000-1.5H9.778c-.151-.837-.934-1.5-1.85-1.5s-1.699.663-1.85 1.5H3.75zM10.178 19.5c.151.837.934 1.5 1.85 1.5s1.699-.663 1.85-1.5h6.228a.75.75 0 000-1.5H13.878c-.151-.837-.934-1.5-1.85-1.5s-1.699.663-1.85 1.5H3.75a.75.75 0 000 1.5h6.428z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs">Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <div id="sos-modal" class="fixed inset-0 z-40 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-gray-800 rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div class="sm:flex sm:items-start">
+                    <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-200 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="w-6 h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg font-medium leading-6 text-white" id="modal-title">Manual SOS Alert</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-400">Are you sure you want to trigger a manual SOS alert? This will immediately notify emergency contacts and local services.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                    <button id="confirm-sos" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Trigger Alert
+                    </button>
+                    <button id="cancel-sos" type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="speak-modal" class="fixed inset-0 z-40 hidden overflow-y-auto" aria-labelledby="speak-modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-gray-800 rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div>
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto bg-cyan-200 rounded-full">
+                        <svg class="w-6 h-6 text-cyan-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 18.75a3 3 0 003-3v-7.5a3 3 0 00-6 0v7.5a3 3 0 003 3z" />
+                            <path d="M5.25 12a.75.75 0 00-1.5 0v.01A6.75 6.75 0 0012 18.76v2.99a.75.75 0 001.5 0v-2.99a6.75 6.75 0 008.25-6.75V12a.75.75 0 00-1.5 0v.01a5.25 5.25 0 01-10.5 0V12z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg font-medium leading-6 text-white" id="speak-modal-title">Speak to User</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-400">Type a message to send as audio to the user's headphones.</p>
+                        </div>
+                        <div class="mt-4">
+                            <textarea id="speak-message" rows="3" class="w-full px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm" placeholder="E.g., 'Hello, this is a check-in. Is everything okay?'"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                    <button id="send-speak" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-cyan-600 border border-transparent rounded-md shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:col-start-2 sm:text-sm">
+                        Send Audio
+                    </button>
+                    <button id="cancel-speak" type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="zones-modal" class="fixed inset-0 z-40 hidden overflow-y-auto" aria-labelledby="zones-modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-gray-800 rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div>
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto bg-blue-200 rounded-full">
+                        <svg class="w-6 h-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m0 0v2.25m0-2.25h1.5M12 9.75V15m0 0v2.25m0-2.25h1.5m-1.5 0H9.75M15 12.75V15m0 0v2.25m0-2.25h1.5m-1.5 0H12.75M9 3.75l3 3m0 0l3-3m-3 3V1.5m0 0l3 3m-3-3l-3 3m3-3v3.75M9 16.5h.75m1.5 0h.75m1.5 0h.75M9 19.5h.75m1.5 0h.75m1.5 0h.75M15 19.5h.75M9 3.75h.75M15 3.75h.75" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg font-medium leading-6 text-white" id="zones-modal-title">Manage Safe Zones</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-400">Add or remove locations to be notified when the user arrives or leaves.</p>
+                        </div>
+                        
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <label for="zone-name" class="block text-sm font-medium text-gray-400">Zone Name</label>
+                                <input type="text" name="zone-name" id="zone-name" class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="e.g., Home, Office">
+                            </div>
+                            <div>
+                                <label for="zone-radius" class="block text-sm font-medium text-gray-400">Radius (meters)</label>
+                                <input type="number" name="zone-radius" id="zone-radius" class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="e.g., 50">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400">Location</label>
+                                <div class="flex mt-1 space-x-2">
+                                    <button type="button" id="set-location-current" class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Use Current Location
+                                    </button>
+                                    <button type="button" id="set-location-map" class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-gray-300 bg-gray-600 border border-gray-500 rounded-md shadow-sm hover:bg-gray-500" disabled>
+                                        Pick on Map
+                                    </button>
+                                </div>
+                                <p id="new-zone-location-status" class="mt-2 text-sm text-gray-500">Location: (Not set)</p>
+                            </div>
+                            <button type="button" id="add-zone-btn" class="inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                                Add Zone
+                            </button>
+                        </div>
+
+                        <div class="mt-6 border-t border-gray-700 pt-6">
+                            <h4 class="text-sm font-medium text-left text-gray-400">Current Zones</h4>
+                            <ul id="safe-zone-list" class="mt-2 space-y-2">
+                                </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                    <button id="cancel-zones" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="something.js"></script>
+</body>
+</html>
